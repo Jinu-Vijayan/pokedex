@@ -17,12 +17,13 @@
                     <select name="type" id="type-selection">
                         <option value="all" selected>all</option>
                     </select>
-                    <button type="submit">Filter by type</button>
+                    <button type="submit" id="filter-btn">Filter by type</button>
                 </form>
                 <button id="reset-btn">Reset</button>
             </div>
             <div id="search-input">
                 <input type="text" placeholder="Enter Pokemon name">
+                <button id="search-btn">Search</button>
             </div>
         </div>
         <div id="pokemon-container">
@@ -67,8 +68,8 @@
         </div>
 
         <div id="page-change-btn-container">
-            <button>Next</button>
             <button>Prev</button>
+            <button>Next</button>
         </div>
     </main>
     <script src="./script.js"></script>

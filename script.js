@@ -1,4 +1,4 @@
-const TYPE_FORM = document.querySelector("#type-form");
+const FORM_CONTAINER = document.querySelector("#forms-container");
 const TYPE_SELECTION = document.querySelector("#type-selection");
 const POKEMON_CONTAINER = document.querySelector("#pokemon-container");
 const PAGE_CHANGE_BTN_CONTAINER = document.querySelector("#page-change-btn-container");
@@ -51,7 +51,7 @@ function createPokemonCards(pokemonArray){
 
     // use map to create an array of promises for each API call
     const PROMISE_ARRAY = pokemonArray.map(pokemon => {
-        return fetch(pokemon.url)
+        return fetch(pokemon.url || pokemon.pokemon.url)
         .then(response => response.json())
     })
 
@@ -137,12 +137,14 @@ function createPokemonCards(pokemonArray){
 ***************************************************************************/
 function getPokemonData(url){
     
+    POKEMON_CONTAINER.innerHTML = "";
+
     fetch(url)
     .then(response => response.json())
     .then(data => {
         nextUrl = data.next;
         previousUrl = data.previous;
-        createPokemonCards(data.results);
+        createPokemonCards(data.results || data.pokemon);
     })
 }
 
@@ -172,19 +174,35 @@ function filterHandler(e){
     e.preventDefault();
 
     if(e.target.id === "reset-btn"){
+
         TYPE_SELECTION.value = "all";
+
+        getPokemonData(POKEMON_URL);
+
+    } else if (e.target.id === "filter-btn"){
+
+        getPokemonData(typeMap[TYPE_SELECTION.value]);
+
+    } else if (e.target.id === "search-btn") {
+
+        console.log("search")
+
     }
 }
 
-function pageChange(e){
-    if(e.target.innerText === "Next"){
+/***************************************************************************
+ pageChange function will change the page to the next or previous one
 
-        POKEMON_CONTAINER.innerHTML = "";
+ @param {Object} e -data regarding the click event
+ @return none
+*****************************************************************************/
+function pageChange(e){
+    if(e.target.innerText === "Next" && nextUrl != null){
+
         getPokemonData(nextUrl);
 
     } else if(e.target.innerText === "Prev" && previousUrl != null){
 
-        POKEMON_CONTAINER.innerHTML = "";
         getPokemonData(previousUrl);
 
     }
@@ -192,6 +210,6 @@ function pageChange(e){
 
 document.addEventListener("DOMContentLoaded", onloadHandler);
 
-TYPE_FORM.addEventListener("click", filterHandler);
+FORM_CONTAINER.addEventListener("click", filterHandler);
 
 PAGE_CHANGE_BTN_CONTAINER.addEventListener("click",pageChange);
