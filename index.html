@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>GeekterMon</h1>
+    </header>
+    <main>
+        <div id="forms-container">
+            <div id="type-form">
+                <form action="">
+                    <select name="type" id="type-selection">
+                        <option value="all" selected>all</option>
+                    </select>
+                    <button type="submit">Filter by type</button>
+                </form>
+                <button id="reset-btn">Reset</button>
+            </div>
+            <div id="search-input">
+                <input type="text" placeholder="Enter Pokemon name">
+            </div>
+        </div>
+        <div id="pokemon-container">
+
+            <!-- <div class="pokemon-card">
+                <div class="pokemon-card-front">
+                    <div class="number-and-type-color-container">
+                        <p>No</p>
+                        <div></div>
+                    </div>
+                    <figure>
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png" alt="">
+                        <figcaption>Name</figcaption>
+                    </figure>
+                    <div class="weight-height-container">
+                        <div>
+                            <p>weight</p>
+                            <p>56</p>
+                        </div>
+                        <div>
+                            <p>height</p>
+                            <p>54</p>
+                        </div>
+                    </div>
+                    <div class="type-container">
+                        <p>grass</p>
+                        <p>poison</p>
+                    </div>
+                </div>
+                <div class="pokemon-card-back">
+                    <div class="stats">
+                        <p><span>HP:</span><span>12</span></p>
+                        <p><span>ATK:</span><span>12</span></p>
+                        <p><span>DEF:</span><span>12</span></p>
+                        <p><span>SATK:</span><span>12</span></p>
+                        <p><span>SDEF:</span><span>12</span></p>
+                        <p><span>SPD:</span><span>12</span></p>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+
+        <div id="btn-container">
+            <button>Next</button>
+            <button>Previous</button>
+        </div>
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>
