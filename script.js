@@ -2,6 +2,7 @@ const FORM_CONTAINER = document.querySelector("#forms-container");
 const TYPE_SELECTION = document.querySelector("#type-selection");
 const POKEMON_CONTAINER = document.querySelector("#pokemon-container");
 const PAGE_CHANGE_BTN_CONTAINER = document.querySelector("#page-change-btn-container");
+const SEARCH_POKEMON = document.querySelector("#search-input > input");
 
 
 // URLS
@@ -45,18 +46,32 @@ function getAndCreateOptions(){
 
  @param {Array} pokemonArray an array of objects containing the name of pokemon with the api to get the information about the curresponding pokemon
 
+ @param {Boolean} isSearching a boolean value to see if we are trying to search for a specific pokemon or not the default value is false
+
  @return none
 ***************************************************************************/
-function createPokemonCards(pokemonArray){
+function createPokemonCards(pokemonArray,isSearching = false){
 
-    // use map to create an array of promises for each API call
-    const PROMISE_ARRAY = pokemonArray.map(pokemon => {
-        return fetch(pokemon.url || pokemon.pokemon.url)
-        .then(response => response.json())
-    })
+    // console.log(pokemonArray)
+
+    let promiseArray ;
+    
+    if(!isSearching){
+
+        // use map to create an array of promises for each API call
+        promiseArray = pokemonArray.map(pokemon => {
+            return fetch(pokemon.url || pokemon.pokemon.url)
+            .then(response => response.json())
+        })
+
+    } else {
+
+        promiseArray = pokemonArray;
+
+    }
 
     // use Promise.all to wait till all promises has been resolved
-    Promise.all(PROMISE_ARRAY)
+    Promise.all(promiseArray)
     .then(pokemonDetailsArray => {
 
         pokemonDetailsArray.forEach( pokemonDetails => {
@@ -133,9 +148,11 @@ function createPokemonCards(pokemonArray){
 
  @param {String} url - the url from which pokemon data can be obtained
 
+ @param {Boolean} isSearching a boolean value to see if we are trying to search for a specific pokemon or not the default value is false
+
  @return none
 ***************************************************************************/
-function getPokemonData(url){
+function getPokemonData(url,isSearching = false){
     
     POKEMON_CONTAINER.innerHTML = "";
 
@@ -144,7 +161,8 @@ function getPokemonData(url){
     .then(data => {
         nextUrl = data.next;
         previousUrl = data.previous;
-        createPokemonCards(data.results || data.pokemon);
+        console.log(data)
+        createPokemonCards(data.results || data.pokemon || [data],isSearching);
     })
 }
 
@@ -185,7 +203,12 @@ function filterHandler(e){
 
     } else if (e.target.id === "search-btn") {
 
-        console.log("search")
+        if(SEARCH_POKEMON.value === ""){
+            alert("Please enter name of pokemon");
+        } else {
+            const POKEMON_NAME_URL = `https://pokeapi.co/api/v2/pokemon/${SEARCH_POKEMON.value}`
+            getPokemonData(POKEMON_NAME_URL,true);
+        }
 
     }
 }
