@@ -49,6 +49,7 @@ function createPokemonCards(pokemonArray){
 
             // console.log(pokemonDetails.stats)
 
+            const POKEMON_CARD_CONTAINER = document.createElement("div")
             const POKEMON_CARD = document.createElement("div");
             const POKEMON_CARD_FRONT = document.createElement("div");
             const POKEMON_CARD_BACK = document.createElement("div");
@@ -93,6 +94,7 @@ function createPokemonCards(pokemonArray){
                 TYPE_CONTAINER.appendChild(p);
             })
 
+            POKEMON_CARD_CONTAINER.classList.add("pokemon-card-container")
             POKEMON_CARD.classList.add("pokemon-card");
             POKEMON_CARD_FRONT.classList.add("pokemon-card-front");
             NUMBER_AND_TYPE_COLOR.classList.add("number-and-type-color-container");
@@ -104,8 +106,9 @@ function createPokemonCards(pokemonArray){
             POKEMON_CARD_FRONT.append(NUMBER_AND_TYPE_COLOR,FIGURE,WEIGHT_HEIGHT_CONTAINER,TYPE_CONTAINER);
             POKEMON_CARD_BACK.appendChild(STATS);
             POKEMON_CARD.append(POKEMON_CARD_FRONT,POKEMON_CARD_BACK);
+            POKEMON_CARD_CONTAINER.appendChild(POKEMON_CARD)
 
-            POKEMON_CONTAINER.appendChild(POKEMON_CARD);
+            POKEMON_CONTAINER.appendChild(POKEMON_CARD_CONTAINER);
 
 
         })

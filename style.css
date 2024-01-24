@@ -96,6 +96,6 @@
     margin-bottom: 0.2rem;
 }
 
-.pokemon-card:hover {
+.pokemon-card-container:hover .pokemon-card{
     transform: rotateY(180deg);
 }
