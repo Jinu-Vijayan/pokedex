@@ -99,3 +99,14 @@
 .pokemon-card-container:hover .pokemon-card{
     transform: rotateY(180deg);
 }
+
+#page-change-btn-container{
+    text-align: center;
+    margin:0.625rem;
+}
+
+#page-change-btn-container button{
+    padding: 0.625rem;
+    border-radius: 0.625rem;
+    margin-left: 1rem;
+}

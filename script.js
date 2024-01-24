@@ -1,6 +1,7 @@
 const TYPE_FORM = document.querySelector("#type-form");
 const TYPE_SELECTION = document.querySelector("#type-selection");
 const POKEMON_CONTAINER = document.querySelector("#pokemon-container");
+const PAGE_CHANGE_BTN_CONTAINER = document.querySelector("#page-change-btn-container");
 
 
 // URLS
@@ -59,8 +60,6 @@ function createPokemonCards(pokemonArray){
     .then(pokemonDetailsArray => {
 
         pokemonDetailsArray.forEach( pokemonDetails => {
-
-            console.log(pokemonDetails.id)
 
             const POKEMON_CARD_CONTAINER = document.createElement("div")
             const POKEMON_CARD = document.createElement("div");
@@ -129,7 +128,8 @@ function createPokemonCards(pokemonArray){
 }
 
 /*************************************************************************
- getPokemonData function will get the data about pokemon from the given url
+ getPokemonData function will get the data about pokemon from the given api
+ and call createPokemonCards function to render the pokemon cards
 
  @param {String} url - the url from which pokemon data can be obtained
 
@@ -157,7 +157,7 @@ function getPokemonData(url){
 function onloadHandler(){
 
     getAndCreateOptions();
-    getPokemonData(POKEMON_URL)
+    getPokemonData(POKEMON_URL);
 
 }
 
@@ -176,6 +176,22 @@ function filterHandler(e){
     }
 }
 
-document.addEventListener("DOMContentLoaded", onloadHandler)
+function pageChange(e){
+    if(e.target.innerText === "Next"){
 
-TYPE_FORM.addEventListener("click", filterHandler)
+        POKEMON_CONTAINER.innerHTML = "";
+        getPokemonData(nextUrl);
+
+    } else if(e.target.innerText === "Prev" && previousUrl != null){
+
+        POKEMON_CONTAINER.innerHTML = "";
+        getPokemonData(previousUrl);
+
+    }
+}
+
+document.addEventListener("DOMContentLoaded", onloadHandler);
+
+TYPE_FORM.addEventListener("click", filterHandler);
+
+PAGE_CHANGE_BTN_CONTAINER.addEventListener("click",pageChange);
