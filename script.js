@@ -39,15 +39,28 @@ function getAndCreateOptions(){
 
 }
 
+/**************************************************************************
+ createPokemonCards function creates and appends the cards containing info about the pokemons from given array
+
+ @param {Array} pokemonArray an array of objects containing the name of pokemon with the api to get the information about the curresponding pokemon
+
+ @return none
+***************************************************************************/
 function createPokemonCards(pokemonArray){
 
-    pokemonArray.forEach((pokemon) => {
-
-        fetch(pokemon.url)
+    // use map to create an array of promises for each API call
+    const PROMISE_ARRAY = pokemonArray.map(pokemon => {
+        return fetch(pokemon.url)
         .then(response => response.json())
-        .then(pokemonDetails => {
+    })
 
-            // console.log(pokemonDetails.stats)
+    // use Promise.all to wait till all promises has been resolved
+    Promise.all(PROMISE_ARRAY)
+    .then(pokemonDetailsArray => {
+
+        pokemonDetailsArray.forEach( pokemonDetails => {
+
+            console.log(pokemonDetails.id)
 
             const POKEMON_CARD_CONTAINER = document.createElement("div")
             const POKEMON_CARD = document.createElement("div");
@@ -109,7 +122,6 @@ function createPokemonCards(pokemonArray){
             POKEMON_CARD_CONTAINER.appendChild(POKEMON_CARD)
 
             POKEMON_CONTAINER.appendChild(POKEMON_CARD_CONTAINER);
-
 
         })
 
