@@ -54,6 +54,12 @@ function createPokemonCards(pokemonArray,isSearching = false){
 
     // console.log(pokemonArray)
 
+    if(pokemonArray.length === 0){
+        alert("No pokemon of this type exists");
+        location.reload();
+        return;
+    }
+
     let promiseArray ;
     
     if(!isSearching){
@@ -155,15 +161,22 @@ function createPokemonCards(pokemonArray,isSearching = false){
 function getPokemonData(url,isSearching = false){
     
     POKEMON_CONTAINER.innerHTML = "";
+    POKEMON_CONTAINER.innerText = "Loading...";
 
     fetch(url)
     .then(response => response.json())
     .then(data => {
         nextUrl = data.next;
         previousUrl = data.previous;
-        console.log(data)
+        // console.log(data)
         createPokemonCards(data.results || data.pokemon || [data],isSearching);
     })
+    .catch(error => {
+        alert("Plese enter valid pokemon name");
+        location.reload();
+    })
+
+    POKEMON_CONTAINER.innerText = "";
 }
 
 
@@ -194,6 +207,7 @@ function filterHandler(e){
     if(e.target.id === "reset-btn"){
 
         TYPE_SELECTION.value = "all";
+        SEARCH_POKEMON.value = ""
 
         getPokemonData(POKEMON_URL);
 
@@ -206,7 +220,7 @@ function filterHandler(e){
         if(SEARCH_POKEMON.value === ""){
             alert("Please enter name of pokemon");
         } else {
-            const POKEMON_NAME_URL = `https://pokeapi.co/api/v2/pokemon/${SEARCH_POKEMON.value}`
+            const POKEMON_NAME_URL = `https://pokeapi.co/api/v2/pokemon/${SEARCH_POKEMON.value.toLowerCase()}`
             getPokemonData(POKEMON_NAME_URL,true);
         }
 

@@ -2,6 +2,34 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    text-align: center;
+    margin: 1rem;
+    font-size: 3rem;
+}
+
+#forms-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+#forms-container button, #forms-container select , #forms-container input {
+    padding: 0.4rem;
+    border-radius: 0.625rem;
+}
+
+#type-form{
+    display: flex;
+    gap: 0.625rem;
+}
+
+#type-form form select{
+    margin-right: 0.625rem;
 }
 
 #pokemon-container{
