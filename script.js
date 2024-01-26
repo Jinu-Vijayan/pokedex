@@ -100,15 +100,15 @@ function createPokemonCards(pokemonArray,isSearching = false){
             FIGURE.innerHTML = `
                 <img src="${pokemonDetails.sprites.front_default}"
                 alt="image of ${pokemonDetails.name}">
-                <figcaption>${pokemonDetails.name}</figcaption>
+                <figcaption>${pokemonDetails.name.toUpperCase()}</figcaption>
             `
             WEIGHT_HEIGHT_CONTAINER.innerHTML = `
                 <div>
-                <p>height</p>
+                <p>HEIGHT</p>
                 <p>${pokemonDetails.height}</p>
                 </div>
                 <div>
-                    <p>weight</p>
+                    <p>WEIGHT</p>
                     <p>${pokemonDetails.weight}</p>
                 </div>
             `
@@ -123,7 +123,7 @@ function createPokemonCards(pokemonArray,isSearching = false){
 
             pokemonDetails.types.forEach((type) => {
                 let p = document.createElement("p");
-                p.innerText = type.type.name
+                p.innerText = type.type.name.toUpperCase();
                 TYPE_CONTAINER.appendChild(p);
             })
 
