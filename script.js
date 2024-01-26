@@ -13,6 +13,30 @@ let nextUrl;
 let previousUrl;
 let typeMap = {};
 
+// an object that stores all the background colors associated with different types of pokemon
+const TYPE_BACKGROUND_COLORS = {
+
+    normal:"#CAD8CF",
+    flying:"#E1E1E1",
+    fighting:"#F75454",
+    poison:"#D86FB9",
+    ground:"#EBC174",
+    rock:"#B5904C",
+    bug:"#77A93A",
+    ghost:"#A595B1",
+    steel:"#D3D3D3",
+    fire:"#FF8800",
+    water:"#00A6FF",
+    grass:"#40FF00",
+    electric:"#FFFF00",
+    psychic:"#E764C9",
+    ice:"#33A0F8",
+    dragon:"#FFD700",
+    dark:"#8A8A8A",
+    fairy:"#FF7C92"
+
+}
+
 /*************************************************************************
  getAndCreateOptions function will get the types from the backend and dynamically create the options in the select tag
 
@@ -30,7 +54,7 @@ function getAndCreateOptions(){
             typeMap[option.name] = option.url;
 
             const  OPTION = document.createElement("option");
-            OPTION.innerText = option.name;
+            OPTION.innerText = option.name.toUpperCase();
             OPTION.setAttribute("value",option.name);
 
             TYPE_SELECTION.appendChild(OPTION);
@@ -127,6 +151,14 @@ function createPokemonCards(pokemonArray,isSearching = false){
                 TYPE_CONTAINER.appendChild(p);
             })
 
+            if(pokemonDetails.types.length === 1){
+
+                POKEMON_CARD.style.background = `${TYPE_BACKGROUND_COLORS[pokemonDetails.types[0].type.name]}`
+            } else {
+
+                POKEMON_CARD.style.background = `linear-gradient(125deg,${TYPE_BACKGROUND_COLORS[pokemonDetails.types[0].type.name]} 50%,${TYPE_BACKGROUND_COLORS[pokemonDetails.types[1].type.name]} 100%)`
+            }
+
             POKEMON_CARD_CONTAINER.classList.add("pokemon-card-container")
             POKEMON_CARD.classList.add("pokemon-card");
             POKEMON_CARD_FRONT.classList.add("pokemon-card-front");
@@ -208,15 +240,19 @@ function filterHandler(e){
 
         TYPE_SELECTION.value = "all";
         SEARCH_POKEMON.value = ""
+        PAGE_CHANGE_BTN_CONTAINER.classList.remove("hidden");
+
 
         getPokemonData(POKEMON_URL);
 
     } else if (e.target.id === "filter-btn"){
 
         getPokemonData(typeMap[TYPE_SELECTION.value]);
+        PAGE_CHANGE_BTN_CONTAINER.classList.add("hidden");
 
     } else if (e.target.id === "search-btn") {
 
+        PAGE_CHANGE_BTN_CONTAINER.classList.add("hidden");
         if(SEARCH_POKEMON.value === ""){
             alert("Please enter name of pokemon");
         } else {
