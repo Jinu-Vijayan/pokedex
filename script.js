@@ -247,8 +247,13 @@ function filterHandler(e){
 
     } else if (e.target.id === "filter-btn"){
 
-        getPokemonData(typeMap[TYPE_SELECTION.value]);
-        PAGE_CHANGE_BTN_CONTAINER.classList.add("hidden");
+        if(TYPE_SELECTION.value === "all"){
+            alert("Please select a valid type")
+        } else {
+            getPokemonData(typeMap[TYPE_SELECTION.value]);
+            PAGE_CHANGE_BTN_CONTAINER.classList.add("hidden");
+        }
+
 
     } else if (e.target.id === "search-btn") {
 
